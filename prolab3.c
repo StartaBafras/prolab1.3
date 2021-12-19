@@ -16,9 +16,9 @@ int out_Put_add(Queue *P_Queue,int plane_landing_time);
 
 int print_Queue(Queue *P_Queue);
 
-int add(Queue *P_Queue);
+int controller(Queue *P_Queue);
 
-Queue* add3(Queue *P_Queue,int priority,int plane_id, int d_time);
+Queue* add(Queue *P_Queue,int priority,int plane_id, int d_time);
 
 int rotar(Queue *P_Queue, int time);
 
@@ -28,7 +28,7 @@ int main()
 {
 
     Queue *Queue_list = NULL;
-    add(Queue_list);
+    controller(Queue_list);
 
     free(Queue_list);
     return 0;
@@ -57,21 +57,6 @@ Queue *landing(Queue *P_Queue, int time)
     return P_Queue;
 }
 
-int out_Put_add(Queue *P_Queue,int plane_landing_time ) //kalkış verilerini dosyaya yazar
-{
-
-    FILE *file_output;
-    if ((file_output = fopen("output.txt", "a")) == NULL)
-    {
-        printf("dosya acma hatasi!");
-        return 1;
-    }
-    fprintf(file_output, "%d %d %d \n", P_Queue->priority_id, P_Queue->plane_id, plane_landing_time + 1);//inis saatini bi saat
-
-    fclose(file_output);
-}
-
-
 
 int print_Queue(Queue *P_Queue) //kuyrugu bastırılır
 {
@@ -79,14 +64,14 @@ int print_Queue(Queue *P_Queue) //kuyrugu bastırılır
     while (P_Queue != NULL)
     {
 
-        printf("Oncelik ->%2d \tplane id ->%2d \torder_Landing_Time ->%2d \n", P_Queue->priority_id, P_Queue->plane_id, P_Queue->order_Landing_Time);
+        printf("Oncelik ->%2d \tucak id ->%2d \torder_Landing_Time ->%2d \n", P_Queue->priority_id, P_Queue->plane_id, P_Queue->order_Landing_Time);
         P_Queue = P_Queue->next;
     }
 
     return 1;
 }
 
-int add(Queue *P_Queue)
+int controller(Queue *P_Queue)
 {
     int temp1;
     int temp2;
@@ -108,7 +93,7 @@ int add(Queue *P_Queue)
 
             if (temp3 == Landing_Time) //saat göre o saat iniş yapıcak uçakları  kuyruga ekler
             {
-                P_Queue = add3(P_Queue,temp1,temp2,temp3);
+                P_Queue = add(P_Queue,temp1,temp2,temp3);
             }
         }
 
@@ -123,7 +108,6 @@ int add(Queue *P_Queue)
         if(P_Queue != NULL) P_Queue = landing(P_Queue,Landing_Time); //kuyruktan inis yapan ucak silinir
 
        
-        //P_Queue = Queue_list;
 
         Landing_Time++; //saat ilerletilir
 
@@ -135,7 +119,7 @@ int add(Queue *P_Queue)
 }
 
 
-Queue* add3(Queue *P_Queue,int priority,int plane_id, int d_time)
+Queue* add(Queue *P_Queue,int priority,int plane_id, int d_time)
 {
     if(P_Queue == NULL)
     {
@@ -149,7 +133,7 @@ Queue* add3(Queue *P_Queue,int priority,int plane_id, int d_time)
     {
         if(P_Queue->priority_id <= priority && P_Queue->next->priority_id <= priority )
         {
-            add3(P_Queue->next,priority,plane_id,d_time);
+            add(P_Queue->next,priority,plane_id,d_time);
             return P_Queue;
         }
         
