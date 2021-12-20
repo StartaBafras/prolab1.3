@@ -20,7 +20,7 @@ int controller(Queue *P_Queue);
 
 Queue* add(Queue *P_Queue,int priority,int plane_id, int d_time);
 
-int rotar(Queue *P_Queue, int time);
+void  rotar(Queue *P_Queue, int time);
 
 
 
@@ -42,7 +42,7 @@ Queue *landing(Queue *P_Queue, int time)
     if ((file_output = fopen("output.txt", "a")) == NULL)
     {
         printf("dosya acma hatasi!");
-        return 1;
+    
     }
 
     fprintf(file_output, "%d %d %d \n", P_Queue->priority_id, P_Queue->plane_id,time + 1);//inis saatini bi saat
@@ -160,7 +160,7 @@ Queue* add(Queue *P_Queue,int priority,int plane_id, int d_time)
     return P_Queue;
 }
 
-int rotar(Queue *P_Queue, int time)
+void rotar(Queue *P_Queue, int time)
 {
     if(P_Queue != NULL)
     {
