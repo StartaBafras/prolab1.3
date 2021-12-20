@@ -42,7 +42,7 @@ Queue *landing(Queue *P_Queue, int time)
     if ((file_output = fopen("output.txt", "a")) == NULL)
     {
         printf("dosya acma hatasi!");
-    
+
     }
 
     fprintf(file_output, "%d %d %d \n", P_Queue->priority_id, P_Queue->plane_id,time + 1);//inis saatini bi saat
@@ -51,7 +51,8 @@ Queue *landing(Queue *P_Queue, int time)
 
     Queue *temp = P_Queue;
     P_Queue = P_Queue->next;
-    printf("\n%d Kuyruk numarali ucak inis yaptı.",temp->plane_id);
+    printf("\ninis izni verildi");
+    printf("\n ucak id ->%2d olan  ucak inis yapti.\n\n",temp->plane_id);
     free(temp);
 
     return P_Queue;
@@ -64,7 +65,7 @@ int print_Queue(Queue *P_Queue) //kuyrugu bastırılır
     while (P_Queue != NULL)
     {
 
-        printf("Oncelik ->%2d \tucak id ->%2d \torder_Landing_Time ->%2d \n", P_Queue->priority_id, P_Queue->plane_id, P_Queue->order_Landing_Time);
+        printf("Oncelik ->%2d \tucak id ->%2d \t talep edilen inis saati->%2d \n", P_Queue->priority_id, P_Queue->plane_id, P_Queue->order_Landing_Time);
         P_Queue = P_Queue->next;
     }
 
@@ -97,8 +98,8 @@ int controller(Queue *P_Queue)
             }
         }
 
-        printf("\n");
-        printf(" \t \t SAAt %d:00  \n\n", Landing_Time);
+        printf("\n\n");
+        printf(" \t \t SAAT %d:00  \n\n", Landing_Time);
 
 
         print_Queue(P_Queue); //kuyruk her saat ekranda gösterilir
@@ -107,7 +108,7 @@ int controller(Queue *P_Queue)
 
         if(P_Queue != NULL) P_Queue = landing(P_Queue,Landing_Time); //kuyruktan inis yapan ucak silinir
 
-       
+
 
         Landing_Time++; //saat ilerletilir
 
@@ -136,7 +137,7 @@ Queue* add(Queue *P_Queue,int priority,int plane_id, int d_time)
             add(P_Queue->next,priority,plane_id,d_time);
             return P_Queue;
         }
-        
+
     }
         Queue *new = malloc(sizeof(Queue));
 
@@ -156,7 +157,7 @@ Queue* add(Queue *P_Queue,int priority,int plane_id, int d_time)
             P_Queue->next = new;
         }
 
-    
+
     return P_Queue;
 }
 
@@ -169,8 +170,8 @@ void rotar(Queue *P_Queue, int time)
 
             if (time - P_Queue->next->order_Landing_Time == 3)
             {
-                printf("\n sabihaya gönderildi\n\n");
-                printf("priority ->%2d \tplane id ->%2d \torder_Landing_Time ->%2d \n\n", P_Queue->next->priority_id, P_Queue->next->plane_id, P_Queue->next->order_Landing_Time);
+                printf("\n Sabiha Gokcen havalimanina yönlendirildi\n");
+                printf("Oncelik ->%2d \tucak id ->%2d \t talep edilen inis saati ->%2d \n\n", P_Queue->next->priority_id, P_Queue->next->plane_id, P_Queue->next->order_Landing_Time);
 
                 Queue *tmp = P_Queue->next;
                 P_Queue->next = P_Queue->next->next;
@@ -179,7 +180,7 @@ void rotar(Queue *P_Queue, int time)
 
             }
             else P_Queue = P_Queue->next;
-            
+
         }
     }
 
