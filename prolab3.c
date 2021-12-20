@@ -45,13 +45,13 @@ Queue *landing(Queue *P_Queue, int time)
 
     }
 
-    fprintf(file_output, "%d %d %d \n", P_Queue->priority_id, P_Queue->plane_id,time + 1);//inis saatini bi saat
+    fprintf(file_output, "%d %d %d %d %d %d\n", P_Queue->priority_id, P_Queue->plane_id,P_Queue->order_Landing_Time,time,time-P_Queue->order_Landing_Time,time+1);//inis saatini bi saat
 
     fclose(file_output);
 
     Queue *temp = P_Queue;
     P_Queue = P_Queue->next;
-    printf("\ninis izni verildi");
+    printf("\n inis izni verildi");
     printf("\n ucak id ->%2d olan  ucak inis yapti.\n\n",temp->plane_id);
     free(temp);
 
