@@ -51,7 +51,6 @@ Queue *landing(Queue *P_Queue, int time)
 
     Queue *temp = P_Queue;
     P_Queue = P_Queue->next;
-    printf("\n inis izni verildi");
     printf("\n ucak id ->%2d olan  ucak inis yapti.\n\n",temp->plane_id);
     free(temp);
 
@@ -101,7 +100,7 @@ int controller(Queue *P_Queue)
         printf("\n\n");
         printf(" \t \t SAAT %d:00  \n\n", Landing_Time);
 
-
+        if(P_Queue != NULL)  printf("\n%d numarali ucak inis izni talep etmekte.\n \n",P_Queue->plane_id);
         print_Queue(P_Queue); //kuyruk her saat ekranda gösterilir
 
         rotar(P_Queue,Landing_Time);
